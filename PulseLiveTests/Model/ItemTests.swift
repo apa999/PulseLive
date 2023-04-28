@@ -28,10 +28,8 @@ final class ItemTests: XCTestCase {
   
   func test_DecodeItemFromTestData() throws {
     let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .iso8601
-    
-    let date = "18/04/2013 11:48"
-    let sut  = try decoder.decode(Item.self, from: ItemTestData.itemTestData)
+    let date    = "18/04/2013 11:48"
+    let sut     = try decoder.decode(Item.self, from: ItemTestData.itemTestData)
     
     XCTAssertEqual(sut.id, 36)
     XCTAssertEqual(sut.title, "Article 8")
