@@ -32,7 +32,7 @@ struct NetworkManager {
     
     do {
       return try decoder.decode(Content.self, from: data)
-    } catch (let error) {
+    } catch {
       throw PLError.invalidData
     }
   }
