@@ -16,6 +16,9 @@
 		3374B58529FBCC0200B45B3B /* PulseLiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B58429FBCC0200B45B3B /* PulseLiveTests.swift */; };
 		3374B58F29FBCC0200B45B3B /* PulseLiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B58E29FBCC0200B45B3B /* PulseLiveUITests.swift */; };
 		3374B59129FBCC0200B45B3B /* PulseLiveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B59029FBCC0200B45B3B /* PulseLiveUITestsLaunchTests.swift */; };
+		3374B5A229FBCC5B00B45B3B /* ItemTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B5A129FBCC5B00B45B3B /* ItemTestData.swift */; };
+		3374B5A429FBCD0700B45B3B /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B5A329FBCD0700B45B3B /* ItemTests.swift */; };
+		3374B5A629FBCD6100B45B3B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B5A529FBCD6100B45B3B /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		3374B58A29FBCC0200B45B3B /* PulseLiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PulseLiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3374B58E29FBCC0200B45B3B /* PulseLiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseLiveUITests.swift; sourceTree = "<group>"; };
 		3374B59029FBCC0200B45B3B /* PulseLiveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseLiveUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3374B5A129FBCC5B00B45B3B /* ItemTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTestData.swift; sourceTree = "<group>"; };
+		3374B5A329FBCD0700B45B3B /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
+		3374B5A529FBCD6100B45B3B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +105,10 @@
 		3374B56C29FBCC0100B45B3B /* PulseLive */ = {
 			isa = PBXGroup;
 			children = (
-				3374B56D29FBCC0100B45B3B /* AppDelegate.swift */,
-				3374B56F29FBCC0100B45B3B /* SceneDelegate.swift */,
-				3374B57129FBCC0100B45B3B /* ViewController.swift */,
-				3374B57329FBCC0100B45B3B /* Main.storyboard */,
-				3374B57629FBCC0200B45B3B /* Assets.xcassets */,
-				3374B57829FBCC0200B45B3B /* LaunchScreen.storyboard */,
+				3374B59D29FBCC2100B45B3B /* AppSystem */,
 				3374B57B29FBCC0200B45B3B /* Info.plist */,
+				3374B5A029FBCC4A00B45B3B /* Model */,
+				3374B57129FBCC0100B45B3B /* ViewController.swift */,
 			);
 			path = PulseLive;
 			sourceTree = "<group>";
@@ -113,6 +116,8 @@
 		3374B58329FBCC0200B45B3B /* PulseLiveTests */ = {
 			isa = PBXGroup;
 			children = (
+				3374B59F29FBCC3E00B45B3B /* TestData */,
+				3374B59E29FBCC3700B45B3B /* Model */,
 				3374B58429FBCC0200B45B3B /* PulseLiveTests.swift */,
 			);
 			path = PulseLiveTests;
@@ -125,6 +130,42 @@
 				3374B59029FBCC0200B45B3B /* PulseLiveUITestsLaunchTests.swift */,
 			);
 			path = PulseLiveUITests;
+			sourceTree = "<group>";
+		};
+		3374B59D29FBCC2100B45B3B /* AppSystem */ = {
+			isa = PBXGroup;
+			children = (
+				3374B56D29FBCC0100B45B3B /* AppDelegate.swift */,
+				3374B56F29FBCC0100B45B3B /* SceneDelegate.swift */,
+				3374B57329FBCC0100B45B3B /* Main.storyboard */,
+				3374B57629FBCC0200B45B3B /* Assets.xcassets */,
+				3374B57829FBCC0200B45B3B /* LaunchScreen.storyboard */,
+			);
+			path = AppSystem;
+			sourceTree = "<group>";
+		};
+		3374B59E29FBCC3700B45B3B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3374B5A329FBCD0700B45B3B /* ItemTests.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3374B59F29FBCC3E00B45B3B /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				3374B5A129FBCC5B00B45B3B /* ItemTestData.swift */,
+			);
+			path = TestData;
+			sourceTree = "<group>";
+		};
+		3374B5A029FBCC4A00B45B3B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3374B5A529FBCD6100B45B3B /* Item.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3374B5A629FBCD6100B45B3B /* Item.swift in Sources */,
 				3374B57229FBCC0100B45B3B /* ViewController.swift in Sources */,
 				3374B56E29FBCC0100B45B3B /* AppDelegate.swift in Sources */,
 				3374B57029FBCC0100B45B3B /* SceneDelegate.swift in Sources */,
@@ -268,7 +310,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3374B5A229FBCC5B00B45B3B /* ItemTestData.swift in Sources */,
 				3374B58529FBCC0200B45B3B /* PulseLiveTests.swift in Sources */,
+				3374B5A429FBCD0700B45B3B /* ItemTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
