@@ -9,23 +9,77 @@ import UIKit
 
 class ContentAsListVC: UIViewController {
   
-  let tableView      = UITableView()
-  var items : [Item] = []
+  let tableView = UITableView()
+  let nc        = NotificationCenter.default
   
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+
     configureViewController()
     configureTableView()
+    configureRefreshButtons()
+    configureSortButtons()
+    addObservers()
+    askForContents()
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    getContents()
+  //MARK: - Handlers and Observers
+  @objc func contentDataReady() {
+    tableView.reloadData()
+  }
+  
+  @objc func refreshButtonTapped() {
+    ItemsManager.shared.getContents()
+  }
+  
+  @objc func sortButtonTapped() {
+    ItemsManager.shared.sortBy()
+    
+    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? ButtonImages.titleDescending : ButtonImages.titleAscending
+    
+    let sortImage  = UIImage(systemName: sortButtonImageName)
+    
+    navigationItem.rightBarButtonItem?.image = sortImage
+    
+    tableView.reloadData()
   }
   
   //MARK: - Private functions
-  func configureTableView() {
+  private func addObservers() {
+    nc.addObserver(self, selector: #selector(contentDataReady), name: Notification.Name(NotificationNames.contentDataReady), object: nil)
+  }
+  
+  private func askForContents() {
+    ItemsManager.shared.getContents()
+  }
+  
+  private func configureRefreshButtons() {
+  
+    let refreshImage  = UIImage(systemName: ButtonImages.refreshItems)
+    
+    let refreshButton = UIBarButtonItem(image: refreshImage,
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(refreshButtonTapped))
+
+    navigationItem.leftBarButtonItem = refreshButton
+  }
+  
+  private func configureSortButtons() {
+    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? ButtonImages.titleAscending : ButtonImages.titleDescending
+    
+    let sortImage  = UIImage(systemName: sortButtonImageName)
+    
+    let sortButton = UIBarButtonItem(image: sortImage,
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(sortButtonTapped))
+
+    navigationItem.rightBarButtonItem = sortButton
+  }
+  
+  private func configureTableView() {
     view.addSubview(tableView)
     
     tableView.frame         = view.bounds
@@ -42,45 +96,26 @@ class ContentAsListVC: UIViewController {
     title                   = TitlesAndLabels.contentAsListVCTitle
     navigationController?.navigationBar.prefersLargeTitles = true
   }
-  
-  private func getContents() {
-    Task {
-      do {
-        let contents = try await NetworkManager.shared.getContents()
-        items = contents.items
-  
-        DispatchQueue.main.async { [weak self] in
-          guard let self else {return}
-          self.tableView.reloadData()
-          self.view.bringSubviewToFront(self.tableView)
-        }
-      } catch {
-#warning("Implement error handling")
-      }
-    }
-  }
-  
 }
 
 //MARK: - Extensions
 extension ContentAsListVC: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return items.count
+    return ItemsManager.shared.items.count
   }
-  
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.plItemListCell) as! PLItemListCell
     
-    let item = items[indexPath.row]
+    let item = ItemsManager.shared.items[indexPath.row]
     cell.set(item: item)
     return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let itemDetailVC  = ItemDetailVC()
-    itemDetailVC.item = items[indexPath.row]
+    itemDetailVC.item = ItemsManager.shared.items[indexPath.row]
     
     navigationController?.pushViewController(itemDetailVC, animated: true)
   }

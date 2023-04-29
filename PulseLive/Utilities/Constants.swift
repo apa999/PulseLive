@@ -7,6 +7,16 @@
 
 import Foundation
 
+enum NotificationNames {
+  static let contentDataReady = "ContentDataReady"
+}
+
+enum ButtonImages {
+  static let titleAscending  = "arrowtriangle.up.fill"
+  static let titleDescending = "arrowtriangle.down.fill"
+  static let refreshItems    = "arrow.clockwise"
+}
+
 enum CellIdentifiers {
   static let plItemListCell = "plItemListCell"
 }
