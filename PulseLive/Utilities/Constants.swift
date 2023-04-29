@@ -7,7 +7,16 @@
 
 import Foundation
 
+enum CellIdentifiers {
+  static let plItemListCell = "plItemListCell"
+}
+
 enum DataSourceLinks {
   static let contentListEndpoint   = "https://dynamic.pulselive.com/test/native/contentList.json"
   static let contentDetailEndpoint = "https://dynamic.pulselive.com/test/native/content/"
+}
+
+enum TitlesAndLabels {
+  static let contentAsListVCTitle = "List of Articles"
+  static let contentAsGridVCTitle = "Grid of Articles"
 }

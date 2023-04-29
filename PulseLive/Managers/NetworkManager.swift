@@ -39,7 +39,7 @@ struct NetworkManager {
   
   // MARK: - Get Item Details
   func getItemDetail(for id: Int) async throws -> Item {
-    let endpoint = "\(DataSourceLinks.contentDetailEndpoint)\(id)"
+    let endpoint = "\(DataSourceLinks.contentDetailEndpoint)\(id).json"
     
     guard let url = URL(string: endpoint) else { throw PLError.invalidEndpoint }
     
@@ -50,7 +50,8 @@ struct NetworkManager {
     }
     
     do {
-      return try decoder.decode(Item.self, from: data)
+      let itemDetail = try decoder.decode(ItemDetail.self, from: data)
+      return itemDetail.item
     } catch {
       throw PLError.invalidData
     }

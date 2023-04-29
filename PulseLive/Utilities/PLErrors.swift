@@ -12,4 +12,6 @@ enum PLError: String, Error {
   case invalidEndpoint = "Invalid URL for endpoint."
   case invalidResponse = "Invalid response from the server."
   case invalidData     = "Invalid data received from server"
+  case noArticlesFound = "Could not find articles for this article"
+  case noDetailsFound  = "Could not find details for this article"
 }
