@@ -189,7 +189,7 @@ extension FavouriteListVC: UITableViewDataSource, UITableViewDelegate {
                                         actionType: .remove) { [weak self] error in
       guard let self else { return }
       
-      guard let error else {
+      guard error != nil else {
         tableView.deleteRows(at: [indexPath], with: .left)
         return
       }
