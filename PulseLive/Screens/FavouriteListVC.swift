@@ -9,9 +9,8 @@ import UIKit
 
 class FavouriteListVC: UIViewController {
 
-  let tableView         = UITableView()
-  var favorites: [Item] = []
-  let nc                = NotificationCenter.default
+  let tableView = UITableView()
+  let nc        = NotificationCenter.default
   
   //MARK: - Lifecycle
   override func viewDidLoad() {
@@ -20,20 +19,32 @@ class FavouriteListVC: UIViewController {
     configureViewController()
     configureTableView()
     configureRefreshButtons()
-    configureSearchController()
     configureSortButtons()
     addObservers()
     getFavorites()
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    configureSearchController()
+    
+    if FavouritesManager.shared.favourites.isEmpty {
+      presentAlert(title: PresentAlertMessages.noFavourites,
+                   message: PresentAlertMessages.noFavouritesMessage)
+    } else {
+      tableView.reloadData()
+    }
+  }
+    
   //MARK: - Handlers and Observers
   @objc func contentDataReady() {
+    configureSearchController()
     tableView.reloadData()
   }
   
   @objc func refreshButtonTapped() {
     
-    FavouritesManager.shared.retrieveFavorites { [weak self] result in
+    FavouritesManager.shared.loadFavourites { [weak self] result in
         guard let self else { return }
         
         switch result {
@@ -79,11 +90,15 @@ class FavouriteListVC: UIViewController {
   }
   
   func configureSearchController() {
+    if FavouritesManager.shared.favourites.isEmpty {
+      navigationItem.searchController = nil
+    } else if navigationItem.searchController == nil {
       let searchController                                    = UISearchController()
       searchController.searchResultsUpdater                   = self
       searchController.searchBar.placeholder                  = "Filter articles by"
       searchController.obscuresBackgroundDuringPresentation   = false
       navigationItem.searchController                         = searchController
+    }
   }
   
   private func configureSortButtons() {
@@ -118,14 +133,14 @@ class FavouriteListVC: UIViewController {
   }
   
   private func getFavorites() {
-    FavouritesManager.shared.retrieveFavorites { [weak self] result in
+    FavouritesManager.shared.loadFavourites { [weak self] result in
       guard let self else { return }
       
       switch result {
         case .success(let favorites):
           self.updateUI(with: favorites)
           
-        case .failure(let error):
+        case .failure:
           DispatchQueue.main.async {
             self.presentAlert(title: PresentAlertMessages.failedToGetFavourites,
                               message: PresentAlertMessages.failedToGetFavouritesMessage)
@@ -134,12 +149,8 @@ class FavouriteListVC: UIViewController {
     }
   }
   
-  private func updateUI(with favorites: [Item]) {
-    if favorites.isEmpty {
-      print("No favourites")
-//        self.showEmptyStateView(with: "No Favorites?\nAdd one on the follower screen.", in: self.view)
-    } else  {
-        self.favorites = favorites
+  private func updateUI(with favourites: [Item]) {
+    if !favourites.isEmpty {
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.view.bringSubviewToFront(self.tableView)
@@ -172,6 +183,21 @@ extension FavouriteListVC: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     guard editingStyle == .delete else { return }
+    
+    FavouritesManager.shared.updateWith(item: FavouritesManager.shared.favourites[indexPath.row],
+                                        actionType: .remove) { [weak self] error in
+        guard let self else { return }
+      
+        guard let error else {
+            tableView.deleteRows(at: [indexPath], with: .left)
+            return
+        }
+        
+        DispatchQueue.main.async {
+          self.presentAlert(title: PresentAlertMessages.failedToRemoveFavourite,
+                            message: PresentAlertMessages.failedToRemoveFavouriteMessage)
+        }
+    }
   }
 }
 

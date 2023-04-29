@@ -22,21 +22,18 @@ class FavouritesManager {
   var favourites = [Item]()
   
   func updateWith(item: Item, actionType: FavouritesManagerActionType, completed: @escaping (PLError?) -> Void) {
-    retrieveFavorites { result in
+    loadFavourites { [weak self] result in
+      guard let self = self else { return }
       switch result {
-        case .success(var items):
+        case .success:
           
           switch actionType {
-            case .add:
-              let f = items.filter{$0 == item}
-              
-              items.append(item)
-              
+            case .add: self.favourites.append(item)
             case .remove:
-              items.removeAll { $0 == item }
+              favourites.removeAll { $0 == item }
           }
           
-          completed(self.save(items: items))
+          completed(save(items: favourites))
           
         case .failure(let error):
           completed(error)
@@ -44,8 +41,7 @@ class FavouritesManager {
     }
   }
   
-  
-  func retrieveFavorites(completed: @escaping (Result<[Item], PLError>) -> Void) {
+  func loadFavourites(completed: @escaping (Result<[Item], PLError>) -> Void) {
     guard let data = defaults.object(forKey: UserDefaultKeys.favouriteArticles) as? Data else {
       completed(.success([]))
       return
@@ -60,7 +56,6 @@ class FavouritesManager {
       completed(.failure(.unableToLoadFavourites))
     }
   }
-  
   
   func save(items: [Item]) -> PLError? {
     do {

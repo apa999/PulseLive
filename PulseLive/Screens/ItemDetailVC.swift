@@ -32,7 +32,7 @@ class ItemDetailVC: UIViewController {
     configureScreen()
     getItemDetail()
   }
-    
+  
   @objc func dismissVC() {
     dismiss(animated: true)
   }
@@ -40,14 +40,24 @@ class ItemDetailVC: UIViewController {
   //MARK: - Handlers and Observers
   @objc func addFavouritesButtonTapped() {
     if let itemWithBody {
-      if let plError = FavouritesManager.shared.save(items: [itemWithBody]) {
-        presentAlert(title: PresentAlertMessages.failedToSaveFavourite,
-                     message: PresentAlertMessages.failedToSaveFavouriteMessage)
+      FavouritesManager.shared.updateWith(item: itemWithBody, actionType: .add) { [weak self] error in
+        guard let self else { return }
+        
+        guard let error else {
+            DispatchQueue.main.async {
+              self.presentAlert(title: PresentAlertMessages.addedFavourites,
+                                message: PresentAlertMessages.addedFavouritesMessage)
+            }
+            return
+        }
+        DispatchQueue.main.async {
+          self.presentAlert(title: PresentAlertMessages.failedToSaveFavourite,
+                            message: PresentAlertMessages.failedToSaveFavouriteMessage)
+        }
       }
-      
     }
   }
-
+  
   @objc func failedToFindBody() {
     presentAlert(title: PresentAlertMessages.failedToFindBody,
                  message: PresentAlertMessages.failedToFindBodyMessage)
@@ -147,5 +157,4 @@ class ItemDetailVC: UIViewController {
     dateLabel.text      = "Date - \(item.date)"
     idLabel.text        = "Reference - \(item.id)"
   }
-  
 }
