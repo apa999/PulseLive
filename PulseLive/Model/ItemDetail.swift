@@ -8,8 +8,12 @@
 import Foundation
 
 // MARK: - ItemDetail
-struct ItemDetail: Decodable {
-    let item: Item
+struct ItemDetail: Codable, Equatable {
+  let item: Item
+  
+  static func == (lhs: ItemDetail, rhs: ItemDetail) -> Bool {
+    return lhs.item == rhs.item
+  }
 }
 
 

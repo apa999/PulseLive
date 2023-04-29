@@ -9,6 +9,7 @@ import UIKit
 
 class ItemDetailVC: UIViewController {
   
+  let nc            = NotificationCenter.default
   let scrollView    = UIScrollView()
   let contentView   = UIView()
   let titleLabel    = PLArticleTitleLabel(textAlignment: .center, fontSize: 24)
@@ -24,54 +25,40 @@ class ItemDetailVC: UIViewController {
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    addObservers()
     configureViewController()
     configureScrollView()
     configureScreen()
     getItemDetail()
   }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-  }
-  
+    
   @objc func dismissVC() {
     dismiss(animated: true)
   }
   
-  //MARK: - Private functions
-  private func getItemDetail() {
+  //MARK: - Handlers and Observers
+  @objc func addFavouritesButtonTapped() {
+    FavouritesManager.shared.save(items: [item])
+  }
+
+  @objc func failedToFindBody() {
+    presentAlert(title: PresentAlertMessages.failedToFindBody,
+                 message: PresentAlertMessages.failedToFindBodyMessage)
+    
+    loadFields(item: item)
+  }
+  
+  @objc func haveGotBody() {
     if let itemWithBody = ItemsManager.shared.getItemDetail(for: item.id) {
       loadFields(item: itemWithBody)
-    } else {
-      Task{
-        do {
-          let itemWithBody = try await NetworkManager.shared.getItemDetail(for: item.id)
-          ItemsManager.shared.addItemDetail(itemWithBody)
-          loadFields(item: itemWithBody)
-        } catch {
-          present(PLAlertVC(title: "Unable to find details", message: ""), animated: true)
-        }
-      }
     }
-    
   }
   
-  private func configureViewController() {
-    view.backgroundColor = .systemBackground
-  }
-  
-  func configureScrollView() {
-    view.addSubview(scrollView)
+  //MARK: - Private functions
+  private func addObservers() {
+    nc.addObserver(self, selector: #selector(haveGotBody), name: Notification.Name(NotificationNames.haveGotBody), object: nil)
     
-    scrollView.addSubview(contentView)
-    scrollView.fillScreen(of: view)
-    contentView.fillScreen(of: scrollView)
-    
-    NSLayoutConstraint.activate([
-      contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-      contentView.heightAnchor.constraint(equalToConstant: 600)
-    ])
+    nc.addObserver(self, selector: #selector(failedToFindBody), name: Notification.Name(NotificationNames.failedToFindBody), object: nil)
   }
   
   private func configureScreen() {
@@ -113,6 +100,35 @@ class ItemDetailVC: UIViewController {
                                    constant: vPadding),
       idLabel.heightAnchor.constraint(equalToConstant: 20)
     ])
+  }
+  
+  private func configureScrollView() {
+    view.addSubview(scrollView)
+    
+    scrollView.addSubview(contentView)
+    scrollView.fillScreen(of: view)
+    contentView.fillScreen(of: scrollView)
+    
+    NSLayoutConstraint.activate([
+      contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+      contentView.heightAnchor.constraint(equalToConstant: 600)
+    ])
+  }
+
+  private func configureViewController() {
+    view.backgroundColor = .systemBackground
+    navigationController?.navigationBar.prefersLargeTitles = true
+    
+    let addFavouritesButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addFavouritesButtonTapped))
+    navigationItem.rightBarButtonItem = addFavouritesButton
+  }
+
+  private func getItemDetail() {
+    if let itemWithBody = ItemsManager.shared.getItemDetail(for: item.id) {
+      loadFields(item: itemWithBody)
+    } else {
+      ItemsManager.shared.getItemBody(for: item)
+    }
   }
   
   private func loadFields(item: Item) {

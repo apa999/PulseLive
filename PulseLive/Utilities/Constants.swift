@@ -9,6 +9,18 @@ import Foundation
 
 enum NotificationNames {
   static let contentDataReady = "ContentDataReady"
+  static let haveGotBody      = "HaveGotBody"
+  static let failedToFindBody = "FailedToFindBody"
+  static let failedToFindData = "FailedToFindData"
+}
+
+enum UserDefaultKeys {
+  static let favouriteArticles = "favouriteArticles"
+}
+
+enum PresentAlertMessages {
+  static let failedToFindBody        = "Missing text"
+  static let failedToFindBodyMessage = "Failed to find the text for this article"
 }
 
 enum ButtonImages {

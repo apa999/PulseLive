@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Item
-struct Item: Decodable {
+struct Item: Codable, Equatable {
   let id       : Int
   let title    : String
   let subtitle : String
@@ -41,6 +41,10 @@ struct Item: Decodable {
     self.subtitle = try container.decode(String.self, forKey: .subtitle)
     self.body     = try container.decodeIfPresent(String.self, forKey: .body)
     self.date     = try container.decode(String.self, forKey: .date)
+  }
+  
+  static func == (lhs: Item, rhs: Item) -> Bool {
+      return lhs.id == rhs.id
   }
   
   private func convertFromDateString(_ dateAsString: String) -> Date {

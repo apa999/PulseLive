@@ -45,14 +45,25 @@ class ItemsManager {
         items        = contents.items
         savedItems   = items
         sortBy(toggle: false)
-  
-        DispatchQueue.main.async { [weak self] in
-          guard let self else {return}
-          
-          nc.post(name: Notification.Name(NotificationNames.contentDataReady), object: nil)
-        }
+        notify(notificationName: NotificationNames.contentDataReady)
       } catch {
-#warning("Implement error handling")
+        notify(notificationName: NotificationNames.failedToFindData)
+      }
+    }
+  }
+  
+  func getItem(for id: Int) -> Item? {
+    return items.first {$0.id == id }
+  }
+  
+  func getItemBody(for item: Item) {
+    Task{
+      do {
+        let itemWithBody = try await NetworkManager.shared.getItemDetail(for: item.id)
+        ItemsManager.shared.addItemDetail(itemWithBody)
+        notify(notificationName: NotificationNames.haveGotBody)
+      } catch {
+        notify(notificationName: NotificationNames.failedToFindBody)
       }
     }
   }
@@ -92,6 +103,14 @@ class ItemsManager {
     switch sortedBy {
       case .titleAscending:  items = items.sorted{ $0.title < $1.title}
       case .titleDescending: items = items.sorted{ $0.title > $1.title}
+    }
+  }
+  
+  private func notify(notificationName: String) {
+    DispatchQueue.main.async { [weak self] in
+      guard let self else {return}
+      
+      nc.post(name: Notification.Name(notificationName), object: nil)
     }
   }
 }

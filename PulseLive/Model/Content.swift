@@ -8,6 +8,6 @@
 import Foundation
 
 // MARK: - Content
-struct Content: Decodable {
+struct Content: Codable {
   let items : [Item]
 }
