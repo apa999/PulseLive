@@ -29,8 +29,8 @@ class FavouriteListVC: UIViewController {
     configureSearchController()
     
     if FavouritesManager.shared.favourites.isEmpty {
-      presentAlert(title: PresentAlertMessages.noFavourites,
-                   message: PresentAlertMessages.noFavouritesMessage)
+      presentAlert(title: AlertMessages.noFavourites,
+                   message: AlertMessages.noFavouritesMessage)
     } else {
       tableView.reloadData()
     }
@@ -51,9 +51,10 @@ class FavouriteListVC: UIViewController {
             case .success(let favourites):
                 self.updateUI(with: favourites)
                 
-            case .failure(let error):
+            case .failure:
                 DispatchQueue.main.async {
-                    self.presentAlert(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+                  self.presentAlert(title: AlertMessages.failedToGetFavourites,
+                                    message: AlertMessages.failedToGetFavouritesMessage)
                 }
         }
     }
@@ -95,7 +96,7 @@ class FavouriteListVC: UIViewController {
     } else if navigationItem.searchController == nil {
       let searchController                                    = UISearchController()
       searchController.searchResultsUpdater                   = self
-      searchController.searchBar.placeholder                  = "Filter articles by"
+      searchController.searchBar.placeholder                  = "Filter favourite articles by"
       searchController.obscuresBackgroundDuringPresentation   = false
       navigationItem.searchController                         = searchController
     }
@@ -142,8 +143,8 @@ class FavouriteListVC: UIViewController {
           
         case .failure:
           DispatchQueue.main.async {
-            self.presentAlert(title: PresentAlertMessages.failedToGetFavourites,
-                              message: PresentAlertMessages.failedToGetFavouritesMessage)
+            self.presentAlert(title: AlertMessages.failedToGetFavourites,
+                              message: AlertMessages.failedToGetFavouritesMessage)
           }
       }
     }
@@ -194,8 +195,8 @@ extension FavouriteListVC: UITableViewDataSource, UITableViewDelegate {
         }
         
         DispatchQueue.main.async {
-          self.presentAlert(title: PresentAlertMessages.failedToRemoveFavourite,
-                            message: PresentAlertMessages.failedToRemoveFavouriteMessage)
+          self.presentAlert(title: AlertMessages.failedToRemoveFavourite,
+                            message: AlertMessages.failedToRemoveFavouriteMessage)
         }
     }
   }
@@ -206,12 +207,12 @@ extension FavouriteListVC: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
     guard let filter = searchController.searchBar.text, !filter.isEmpty else {
-      ItemsManager.shared.clearFilter()
+      FavouritesManager.shared.clearFilter()
       tableView.reloadData()
       return
     }
     
-    ItemsManager.shared.filterBy(filter.lowercased())
+    FavouritesManager.shared.filterBy(filter.lowercased())
     tableView.reloadData()
   }
 }

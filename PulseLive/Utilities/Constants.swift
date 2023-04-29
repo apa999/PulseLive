@@ -18,9 +18,9 @@ enum UserDefaultKeys {
   static let favouriteArticles = "favouriteArticles"
 }
 
-enum PresentAlertMessages {
+enum AlertMessages {
   static let addedFavourites                = "Article saved"
-  static let addedFavouritesMessage         = "This article has been saved to favourites"
+  static let addedFavouritesMessage         = "has been saved to favourites."
   static let noFavourites                   = "No favourite articles"
   static let noFavouritesMessage            = "To save an article as a favourite, click the \'+' button in the article detail screen."
   static let failedToGetFavourites          = "Missing favourites"

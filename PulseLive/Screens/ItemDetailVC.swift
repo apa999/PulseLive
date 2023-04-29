@@ -45,22 +45,24 @@ class ItemDetailVC: UIViewController {
         
         guard let error else {
             DispatchQueue.main.async {
-              self.presentAlert(title: PresentAlertMessages.addedFavourites,
-                                message: PresentAlertMessages.addedFavouritesMessage)
+              let message = "\(itemWithBody.title) \(AlertMessages.addedFavouritesMessage)"
+              
+              self.presentAlert(title: AlertMessages.addedFavourites,
+                                message: message)
             }
             return
         }
         DispatchQueue.main.async {
-          self.presentAlert(title: PresentAlertMessages.failedToSaveFavourite,
-                            message: PresentAlertMessages.failedToSaveFavouriteMessage)
+          self.presentAlert(title: AlertMessages.failedToSaveFavourite,
+                            message: AlertMessages.failedToSaveFavouriteMessage)
         }
       }
     }
   }
   
   @objc func failedToFindBody() {
-    presentAlert(title: PresentAlertMessages.failedToFindBody,
-                 message: PresentAlertMessages.failedToFindBodyMessage)
+    presentAlert(title: AlertMessages.failedToFindBody,
+                 message: AlertMessages.failedToFindBodyMessage)
     
     loadFields(item: item)
   }

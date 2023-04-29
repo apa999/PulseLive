@@ -13,13 +13,26 @@ enum FavouritesManagerActionType {
 
 class FavouritesManager {
   
-  static let shared = FavouritesManager()
+  static let shared    = FavouritesManager()
+  private let defaults = UserDefaults.standard
+  var favourites       = [Item]()
+  var savedFavourites  = [Item]()
+  var detailedItems    = [Item]()
+  var isFiltered       = false
   
   private init() {}
-  
-  private let defaults = UserDefaults.standard
 
-  var favourites = [Item]()
+  //MARK: - Public functions
+  func clearFilter() {
+    isFiltered = false
+    favourites = savedFavourites
+  }
+  
+  func filterBy(_ filter: String) {
+    isFiltered       = true
+    savedFavourites  = favourites
+    favourites       = favourites.filter { $0.title.lowercased().contains(filter.lowercased()) }
+  }
   
   func updateWith(item: Item, actionType: FavouritesManagerActionType, completed: @escaping (PLError?) -> Void) {
     loadFavourites { [weak self] result in
@@ -48,9 +61,10 @@ class FavouritesManager {
     }
     
     do {
-      let decoder     = JSONDecoder()
-      let items       = try decoder.decode([Item].self, from: data)
-      self.favourites = items
+      let decoder          = JSONDecoder()
+      let items            = try decoder.decode([Item].self, from: data)
+      self.favourites      = items
+      self.savedFavourites = items
       completed(.success(items))
     } catch {
       completed(.failure(.unableToLoadFavourites))
