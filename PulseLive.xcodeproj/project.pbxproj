@@ -62,7 +62,6 @@
 		3374B61629FD6B9200B45B3B /* PLArticleIdLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B60129FD6B9200B45B3B /* PLArticleIdLabelTests.swift */; };
 		3374B61829FD6B9200B45B3B /* NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B60329FD6B9200B45B3B /* NetworkManagerTests.swift */; };
 		3374B61929FD6B9200B45B3B /* ItemDetailVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B60429FD6B9200B45B3B /* ItemDetailVCTests.swift */; };
-		3374B61A29FD6B9200B45B3B /* ContentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374B60529FD6B9200B45B3B /* ContentTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,7 +141,6 @@
 		3374B60129FD6B9200B45B3B /* PLArticleIdLabelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PLArticleIdLabelTests.swift; path = "PulseLiveTests/New Group/PLArticleIdLabelTests.swift"; sourceTree = SOURCE_ROOT; };
 		3374B60329FD6B9200B45B3B /* NetworkManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManagerTests.swift; path = "PulseLiveTests/New Group/NetworkManagerTests.swift"; sourceTree = SOURCE_ROOT; };
 		3374B60429FD6B9200B45B3B /* ItemDetailVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemDetailVCTests.swift; path = "PulseLiveTests/New Group/ItemDetailVCTests.swift"; sourceTree = SOURCE_ROOT; };
-		3374B60529FD6B9200B45B3B /* ContentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentTests.swift; path = PulseLiveTests/ManagerTests/ContentTests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,7 +300,6 @@
 		3374B5B229FBD6F100B45B3B /* ManagerTests */ = {
 			isa = PBXGroup;
 			children = (
-				3374B60529FD6B9200B45B3B /* ContentTests.swift */,
 				3374B5B329FBD70C00B45B3B /* ItemsManagerTests.swift */,
 				3374B5B729FBDB3C00B45B3B /* NetworkManagerTests.swift */,
 			);
@@ -568,7 +565,6 @@
 				3374B60D29FD6B9200B45B3B /* PLItemListCellTests.swift in Sources */,
 				3374B60729FD6B9200B45B3B /* PLArticleBodyLabelTests.swift in Sources */,
 				3374B61229FD6B9200B45B3B /* PLArticleDateLabelTests.swift in Sources */,
-				3374B61A29FD6B9200B45B3B /* ContentTests.swift in Sources */,
 				3374B61129FD6B9200B45B3B /* PLArticleSubtitleLabelTests.swift in Sources */,
 				3374B61329FD6B9200B45B3B /* PLAlertContainerViewTests.swift in Sources */,
 				3374B61429FD6B9200B45B3B /* FavouriteListVCTests.swift in Sources */,
