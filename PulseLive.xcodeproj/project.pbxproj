@@ -200,9 +200,9 @@
 		3374B56C29FBCC0100B45B3B /* PulseLive */ = {
 			isa = PBXGroup;
 			children = (
-				3374B5D529FC20AB00B45B3B /* Extensions */,
 				3374B59D29FBCC2100B45B3B /* AppSystem */,
 				3374B5C929FC16D200B45B3B /* CustomViews */,
+				3374B5D529FC20AB00B45B3B /* Extensions */,
 				3374B57B29FBCC0200B45B3B /* Info.plist */,
 				3374B5A829FBD28F00B45B3B /* Managers */,
 				3374B5A029FBCC4A00B45B3B /* Model */,
@@ -240,9 +240,9 @@
 			isa = PBXGroup;
 			children = (
 				3374B56D29FBCC0100B45B3B /* AppDelegate.swift */,
-				3374B56F29FBCC0100B45B3B /* SceneDelegate.swift */,
 				3374B57629FBCC0200B45B3B /* Assets.xcassets */,
 				3374B57829FBCC0200B45B3B /* LaunchScreen.storyboard */,
+				3374B56F29FBCC0100B45B3B /* SceneDelegate.swift */,
 			);
 			path = AppSystem;
 			sourceTree = "<group>";
@@ -340,11 +340,11 @@
 		3374B5EC29FC494C00B45B3B /* Article */ = {
 			isa = PBXGroup;
 			children = (
+				3374B5DC29FC2C3600B45B3B /* PLArticleBodyLabel.swift */,
 				3374B5E829FC48CB00B45B3B /* PLArticleDateLabel.swift */,
 				3374B5EA29FC48D700B45B3B /* PLArticleIdLabel.swift */,
 				3374B5DA29FC272300B45B3B /* PLArticleSubtitleLabel.swift */,
 				3374B5D329FC1FF500B45B3B /* PLArticleTitleLabel.swift */,
-				3374B5DC29FC2C3600B45B3B /* PLArticleBodyLabel.swift */,
 			);
 			path = Article;
 			sourceTree = "<group>";
