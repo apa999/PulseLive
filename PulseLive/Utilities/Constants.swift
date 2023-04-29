@@ -19,8 +19,12 @@ enum UserDefaultKeys {
 }
 
 enum PresentAlertMessages {
-  static let failedToFindBody        = "Missing text"
-  static let failedToFindBodyMessage = "Failed to find the text for this article"
+  static let failedToGetFavourites        = "Missing favourites"
+  static let failedToGetFavouritesMessage = "Failed to load favourites"
+  static let failedToFindBody             = "Missing text"
+  static let failedToFindBodyMessage      = "Failed to find the text for this article"
+  static let failedToSaveFavourite        = "Failed to save favourite"
+  static let failedToSaveFavouriteMessage = "Unable to save this article as a favourite.\nPlease try again later."
 }
 
 enum ButtonImages {

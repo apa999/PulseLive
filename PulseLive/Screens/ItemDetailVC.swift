@@ -21,6 +21,7 @@ class ItemDetailVC: UIViewController {
   lazy var articleSubviews : [UIView] = [titleLabel, subtitleLabel, bodyLabel, dateLabel, idLabel]
   
   var item: Item!
+  var itemWithBody: Item?
   
   //MARK: - Lifecycle
   override func viewDidLoad() {
@@ -38,7 +39,13 @@ class ItemDetailVC: UIViewController {
   
   //MARK: - Handlers and Observers
   @objc func addFavouritesButtonTapped() {
-    FavouritesManager.shared.save(items: [item])
+    if let itemWithBody {
+      if let plError = FavouritesManager.shared.save(items: [itemWithBody]) {
+        presentAlert(title: PresentAlertMessages.failedToSaveFavourite,
+                     message: PresentAlertMessages.failedToSaveFavouriteMessage)
+      }
+      
+    }
   }
 
   @objc func failedToFindBody() {
@@ -50,6 +57,7 @@ class ItemDetailVC: UIViewController {
   
   @objc func haveGotBody() {
     if let itemWithBody = ItemsManager.shared.getItemDetail(for: item.id) {
+      self.itemWithBody = itemWithBody
       loadFields(item: itemWithBody)
     }
   }
@@ -125,6 +133,7 @@ class ItemDetailVC: UIViewController {
 
   private func getItemDetail() {
     if let itemWithBody = ItemsManager.shared.getItemDetail(for: item.id) {
+      self.itemWithBody = itemWithBody
       loadFields(item: itemWithBody)
     } else {
       ItemsManager.shared.getItemBody(for: item)

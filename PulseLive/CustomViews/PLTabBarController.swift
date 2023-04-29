@@ -17,7 +17,7 @@ class PLTabBarController: UITabBarController {
   
   
   func createListNC() -> UINavigationController {
-    let contentAsListVC        = ContentAsListVC()
+    let contentAsListVC        = ContentListVC()
     let image                  = UIImage(systemName: "list.star")
     contentAsListVC.title      = TitlesAndLabels.contentAsListVCTitle
     contentAsListVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsListVCTitle,
@@ -28,7 +28,7 @@ class PLTabBarController: UITabBarController {
   
   
   func createGridNC() -> UINavigationController {
-    let contentAsGridVC        = ContentAsGridVC()
+    let contentAsGridVC        = FavouriteListVC()
     let image                  = UIImage(systemName: "heart")
     contentAsGridVC.title      = TitlesAndLabels.contentAsGridVCTitle
     contentAsGridVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsGridVCTitle,

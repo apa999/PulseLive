@@ -18,11 +18,8 @@ class FavouritesManager {
   private init() {}
   
   private let defaults = UserDefaults.standard
-  
-  enum Keys {
-    static let favouriteArticles = UserDefaultKeys.favouriteArticles
-  }
-  
+
+  var favourites = [Item]()
   
   func updateWith(item: Item, actionType: FavouritesManagerActionType, completed: @escaping (PLError?) -> Void) {
     retrieveFavorites { result in
@@ -32,11 +29,6 @@ class FavouritesManager {
           switch actionType {
             case .add:
               let f = items.filter{$0 == item}
-              
-//              guard !itemDetails.contains(itemDetail.item) else {
-//                completed(.alreadyInFavorites)
-//                return
-//              }
               
               items.append(item)
               
@@ -60,11 +52,12 @@ class FavouritesManager {
     }
     
     do {
-      let decoder = JSONDecoder()
-      let items   = try decoder.decode([Item].self, from: data)
+      let decoder     = JSONDecoder()
+      let items       = try decoder.decode([Item].self, from: data)
+      self.favourites = items
       completed(.success(items))
     } catch {
-      completed(.failure(.unableToSaveAsFavourite))
+      completed(.failure(.unableToLoadFavourites))
     }
   }
   
