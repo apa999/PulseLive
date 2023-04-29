@@ -27,6 +27,12 @@ class ItemsManager {
   private init() {}
   
   //MARK: - Public functions
+  func addItemDetail(_ item: Item) {
+    if !detailedItems.contains(where: {$0.id == item.id}) {
+      detailedItems.append(item)
+    }
+  }
+  
   func clearFilter() {
     isFiltered = false
     items      = savedItems
@@ -67,6 +73,14 @@ class ItemsManager {
       }
     }
   }
+
+  func getItemDetail(for id: Int) -> Item? {
+    if let item = detailedItems.first(where: {$0.id == id }) {
+      return item
+    } else {
+      return nil
+    }
+  }
   
   func getItems() throws {
     Task {
@@ -77,20 +91,6 @@ class ItemsManager {
       } catch {
         throw PLError.noArticlesFound
       }
-    }
-  }
-  
-  func getItemDetail(for id: Int) -> Item? {
-    if let item = detailedItems.first(where: {$0.id == id }) {
-      return item
-    } else {
-      return nil
-    }
-  }
-  
-  func addItemDetail(_ item: Item) {
-    if !detailedItems.contains(where: {$0.id == item.id}) {
-      detailedItems.append(item)
     }
   }
   
@@ -106,6 +106,7 @@ class ItemsManager {
     }
   }
   
+  //MARK: - Private functions
   private func notify(notificationName: String) {
     DispatchQueue.main.async { [weak self] in
       guard let self else {return}

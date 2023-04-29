@@ -7,17 +7,6 @@
 
 import Foundation
 
-enum NotificationNames {
-  static let contentDataReady = "ContentDataReady"
-  static let haveGotBody      = "HaveGotBody"
-  static let failedToFindBody = "FailedToFindBody"
-  static let failedToFindData = "FailedToFindData"
-}
-
-enum UserDefaultKeys {
-  static let favouriteArticles = "favouriteArticles"
-}
-
 enum AlertMessages {
   static let addedFavourites                = "Article saved"
   static let addedFavouritesMessage         = "has been saved to favourites."
@@ -33,12 +22,6 @@ enum AlertMessages {
   static let failedToRemoveFavouriteMessage = "Unable to remove this article as a favourite.\nPlease try again later."
 }
 
-enum ButtonImages {
-  static let titleAscending  = "arrowtriangle.up.fill"
-  static let titleDescending = "arrowtriangle.down.fill"
-  static let refreshItems    = "arrow.clockwise"
-}
-
 enum CellIdentifiers {
   static let plItemListCell = "plItemListCell"
 }
@@ -48,7 +31,31 @@ enum DataSourceLinks {
   static let contentDetailEndpoint = "https://dynamic.pulselive.com/test/native/content/"
 }
 
+enum NotificationNames {
+  static let contentDataReady = "ContentDataReady"
+  static let haveGotBody      = "HaveGotBody"
+  static let failedToFindBody = "FailedToFindBody"
+  static let failedToFindData = "FailedToFindData"
+}
+
+enum PlaceHolders {
+  static let filterArticlesBy          = "Filter articles by"
+  static let filterFavouriteArticlesBy = "Filter favourite articles by"
+}
+
+enum SFImages {
+  static let titleAscending  = "arrowtriangle.up.fill"
+  static let titleDescending = "arrowtriangle.down.fill"
+  static let refreshItems    = "arrow.clockwise"
+  static let listStar        = "list.star"
+  static let heart           = "heart"
+}
+
 enum TitlesAndLabels {
-  static let contentAsListVCTitle = "Articles"
-  static let contentAsGridVCTitle = "Favourites"
+  static let contentAsListVCTitle       = "Articles"
+  static let contentAsFavouritesVCTitle = "Favourites"
+}
+
+enum UserDefaultKeys {
+  static let favouriteArticles = "favouriteArticles"
 }

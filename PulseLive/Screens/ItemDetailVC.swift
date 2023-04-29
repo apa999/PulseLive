@@ -43,19 +43,20 @@ class ItemDetailVC: UIViewController {
       FavouritesManager.shared.updateWith(item: itemWithBody, actionType: .add) { [weak self] error in
         guard let self else { return }
         
-        guard let error else {
-            DispatchQueue.main.async {
-              let message = "\(itemWithBody.title) \(AlertMessages.addedFavouritesMessage)"
-              
-              self.presentAlert(title: AlertMessages.addedFavourites,
-                                message: message)
-            }
-            return
+        if error == nil {
+          DispatchQueue.main.async {
+            let message = "\(itemWithBody.title) \(AlertMessages.addedFavouritesMessage)"
+            
+            self.presentAlert(title: AlertMessages.addedFavourites,
+                              message: message)
+          }
+        } else {
+          DispatchQueue.main.async {
+            self.presentAlert(title: AlertMessages.failedToSaveFavourite,
+                              message: AlertMessages.failedToSaveFavouriteMessage)
+          }
         }
-        DispatchQueue.main.async {
-          self.presentAlert(title: AlertMessages.failedToSaveFavourite,
-                            message: AlertMessages.failedToSaveFavouriteMessage)
-        }
+        return
       }
     }
   }
@@ -83,46 +84,44 @@ class ItemDetailVC: UIViewController {
   
   private func configureScreen() {
     
-    let hPadding  : CGFloat = 12
-    let vPadding  : CGFloat = 20
-    var lastLabel : UIView?
+    let hPadding    : CGFloat = 12
+    let vPadding    : CGFloat = 20
+    let labelHeight : CGFloat = 20
     
     for articleSubview in articleSubviews {
       contentView.addSubview(articleSubview)
-      
-      lastLabel = lastLabel == nil ? contentView : lastLabel
-      
+    
       NSLayoutConstraint.activate([
         articleSubview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: hPadding),
         
         articleSubview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hPadding),
       ])
-      lastLabel = articleSubview
     }
     
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-      titleLabel.heightAnchor.constraint(equalToConstant: 20),
+      titleLabel.heightAnchor.constraint(equalToConstant: labelHeight),
       
       subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
                                          constant: vPadding),
-      subtitleLabel.heightAnchor.constraint(equalToConstant: 20),
+      subtitleLabel.heightAnchor.constraint(equalToConstant: labelHeight),
       
       bodyLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor,
                                      constant: vPadding),
-      bodyLabel.heightAnchor.constraint(equalToConstant: 80),
+      bodyLabel.heightAnchor.constraint(equalToConstant: labelHeight * 4),
       
       dateLabel.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor,
                                      constant: vPadding * 3),
-      dateLabel.heightAnchor.constraint(equalToConstant: 20),
+      dateLabel.heightAnchor.constraint(equalToConstant: labelHeight),
       
       idLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor,
                                    constant: vPadding),
-      idLabel.heightAnchor.constraint(equalToConstant: 20)
+      idLabel.heightAnchor.constraint(equalToConstant: labelHeight)
     ])
   }
   
   private func configureScrollView() {
+    let scrollScreenHeight: CGFloat = 600
     view.addSubview(scrollView)
     
     scrollView.addSubview(contentView)
@@ -131,7 +130,7 @@ class ItemDetailVC: UIViewController {
     
     NSLayoutConstraint.activate([
       contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-      contentView.heightAnchor.constraint(equalToConstant: 600)
+      contentView.heightAnchor.constraint(equalToConstant: scrollScreenHeight)
     ])
   }
 

@@ -32,10 +32,9 @@ class PLButton: UIButton {
   final func set(colour: UIColor, title: String, systemImageName: String) {
     configuration?.baseBackgroundColor = colour
     configuration?.baseForegroundColor = colour
-    configuration?.title = title
-    
-    configuration?.image = UIImage(systemName: systemImageName)
-    configuration?.imagePadding = 6
-    configuration?.imagePlacement = .leading
+    configuration?.title               = title
+    configuration?.image               = UIImage(systemName: systemImageName)
+    configuration?.imagePadding        = 6
+    configuration?.imagePlacement      = .leading
   }
 }

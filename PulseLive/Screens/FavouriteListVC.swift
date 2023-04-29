@@ -8,14 +8,14 @@
 import UIKit
 
 class FavouriteListVC: UIViewController {
-
+  
   let tableView = UITableView()
   let nc        = NotificationCenter.default
   
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     configureViewController()
     configureTableView()
     configureRefreshButtons()
@@ -35,7 +35,7 @@ class FavouriteListVC: UIViewController {
       tableView.reloadData()
     }
   }
-    
+  
   //MARK: - Handlers and Observers
   @objc func contentDataReady() {
     configureSearchController()
@@ -45,25 +45,25 @@ class FavouriteListVC: UIViewController {
   @objc func refreshButtonTapped() {
     
     FavouritesManager.shared.loadFavourites { [weak self] result in
-        guard let self else { return }
-        
-        switch result {
-            case .success(let favourites):
-                self.updateUI(with: favourites)
-                
-            case .failure:
-                DispatchQueue.main.async {
-                  self.presentAlert(title: AlertMessages.failedToGetFavourites,
-                                    message: AlertMessages.failedToGetFavouritesMessage)
-                }
-        }
+      guard let self else { return }
+      
+      switch result {
+        case .success(let favourites):
+          self.updateUI(with: favourites)
+          
+        case .failure:
+          DispatchQueue.main.async {
+            self.presentAlert(title: AlertMessages.failedToGetFavourites,
+                              message: AlertMessages.failedToGetFavouritesMessage)
+          }
+      }
     }
   }
   
   @objc func sortButtonTapped() {
     ItemsManager.shared.sortBy()
     
-    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? ButtonImages.titleDescending : ButtonImages.titleAscending
+    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
@@ -77,16 +77,16 @@ class FavouriteListVC: UIViewController {
     nc.addObserver(self, selector: #selector(contentDataReady), name: Notification.Name(NotificationNames.contentDataReady), object: nil)
   }
   
-
-  private func configureRefreshButtons() {
   
-    let refreshImage  = UIImage(systemName: ButtonImages.refreshItems)
+  private func configureRefreshButtons() {
+    
+    let refreshImage  = UIImage(systemName: SFImages.refreshItems)
     
     let refreshButton = UIBarButtonItem(image: refreshImage,
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(refreshButtonTapped))
-
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(refreshButtonTapped))
+    
     navigationItem.leftBarButtonItem = refreshButton
   }
   
@@ -96,14 +96,14 @@ class FavouriteListVC: UIViewController {
     } else if navigationItem.searchController == nil {
       let searchController                                    = UISearchController()
       searchController.searchResultsUpdater                   = self
-      searchController.searchBar.placeholder                  = "Filter favourite articles by"
+      searchController.searchBar.placeholder                  = PlaceHolders.filterFavouriteArticlesBy
       searchController.obscuresBackgroundDuringPresentation   = false
       navigationItem.searchController                         = searchController
     }
   }
   
   private func configureSortButtons() {
-    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? ButtonImages.titleAscending : ButtonImages.titleDescending
+    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? SFImages.titleAscending : SFImages.titleDescending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
@@ -111,7 +111,7 @@ class FavouriteListVC: UIViewController {
                                      style: .plain,
                                      target: self,
                                      action: #selector(sortButtonTapped))
-
+    
     navigationItem.rightBarButtonItem = sortButton
   }
   
@@ -129,7 +129,7 @@ class FavouriteListVC: UIViewController {
   
   private func configureViewController() {
     view.backgroundColor    = .systemBackground
-    title                   = TitlesAndLabels.contentAsGridVCTitle
+    title                   = TitlesAndLabels.contentAsFavouritesVCTitle
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
@@ -152,12 +152,12 @@ class FavouriteListVC: UIViewController {
   
   private func updateUI(with favourites: [Item]) {
     if !favourites.isEmpty {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.view.bringSubviewToFront(self.tableView)
-        }
+      DispatchQueue.main.async {
+        self.tableView.reloadData()
+        self.view.bringSubviewToFront(self.tableView)
+      }
     }
-}
+  }
 }
 
 //MARK: - Extensions
@@ -187,17 +187,17 @@ extension FavouriteListVC: UITableViewDataSource, UITableViewDelegate {
     
     FavouritesManager.shared.updateWith(item: FavouritesManager.shared.favourites[indexPath.row],
                                         actionType: .remove) { [weak self] error in
-        guard let self else { return }
+      guard let self else { return }
       
-        guard let error else {
-            tableView.deleteRows(at: [indexPath], with: .left)
-            return
-        }
-        
-        DispatchQueue.main.async {
-          self.presentAlert(title: AlertMessages.failedToRemoveFavourite,
-                            message: AlertMessages.failedToRemoveFavouriteMessage)
-        }
+      guard let error else {
+        tableView.deleteRows(at: [indexPath], with: .left)
+        return
+      }
+      
+      DispatchQueue.main.async {
+        self.presentAlert(title: AlertMessages.failedToRemoveFavourite,
+                          message: AlertMessages.failedToRemoveFavouriteMessage)
+      }
     }
   }
 }

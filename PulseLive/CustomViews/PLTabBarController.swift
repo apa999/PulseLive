@@ -12,13 +12,12 @@ class PLTabBarController: UITabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
     UITabBar.appearance().tintColor = .systemTeal
-    viewControllers                 = [createListNC(), createGridNC()]
+    viewControllers                 = [createListNC(), createFavouritesNC()]
   }
-  
   
   func createListNC() -> UINavigationController {
     let contentAsListVC        = ContentListVC()
-    let image                  = UIImage(systemName: "list.star")
+    let image                  = UIImage(systemName: SFImages.listStar)
     contentAsListVC.title      = TitlesAndLabels.contentAsListVCTitle
     contentAsListVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsListVCTitle,
                                               image: image, tag: 0)
@@ -26,14 +25,13 @@ class PLTabBarController: UITabBarController {
     return UINavigationController(rootViewController: contentAsListVC)
   }
   
-  
-  func createGridNC() -> UINavigationController {
-    let contentAsGridVC        = FavouriteListVC()
-    let image                  = UIImage(systemName: "heart")
-    contentAsGridVC.title      = TitlesAndLabels.contentAsGridVCTitle
-    contentAsGridVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsGridVCTitle,
+  func createFavouritesNC() -> UINavigationController {
+    let contentAsFavsVC        = FavouriteListVC()
+    let image                  = UIImage(systemName: SFImages.heart)
+    contentAsFavsVC.title      = TitlesAndLabels.contentAsFavouritesVCTitle
+    contentAsFavsVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsFavouritesVCTitle,
                                               image: image, tag: 1)
     
-    return UINavigationController(rootViewController: contentAsGridVC)
+    return UINavigationController(rootViewController: contentAsFavsVC)
   }
 }

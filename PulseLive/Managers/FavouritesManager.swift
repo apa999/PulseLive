@@ -7,11 +7,13 @@
 
 import Foundation
 
-enum FavouritesManagerActionType {
-  case add, remove
-}
+
 
 class FavouritesManager {
+  
+  enum ActionType {
+    case add, remove
+  }
   
   static let shared    = FavouritesManager()
   private let defaults = UserDefaults.standard
@@ -34,7 +36,9 @@ class FavouritesManager {
     favourites       = favourites.filter { $0.title.lowercased().contains(filter.lowercased()) }
   }
   
-  func updateWith(item: Item, actionType: FavouritesManagerActionType, completed: @escaping (PLError?) -> Void) {
+  func updateWith(item: Item,
+                  actionType: ActionType,
+                  completed: @escaping (PLError?) -> Void) {
     loadFavourites { [weak self] result in
       guard let self = self else { return }
       switch result {
@@ -73,7 +77,7 @@ class FavouritesManager {
   
   func save(items: [Item]) -> PLError? {
     do {
-      let encoder = JSONEncoder()
+      let encoder          = JSONEncoder()
       let encodedFavorites = try encoder.encode(items)
       defaults.set(encodedFavorites, forKey: UserDefaultKeys.favouriteArticles)
       return nil

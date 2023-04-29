@@ -15,13 +15,5 @@ extension UIViewController {
     alertVC.modalTransitionStyle    = .crossDissolve
     present(alertVC, animated: true)
   }
-  
-  func presentDefaultError() {
-    let alertVC = PLAlertVC(title: "Something Went Wrong",
-                            message: "We were unable to complete your task at this time. Please try again.")
-    alertVC.modalPresentationStyle  = .overFullScreen
-    alertVC.modalTransitionStyle    = .crossDissolve
-    present(alertVC, animated: true)
-  }
 }
 

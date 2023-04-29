@@ -15,7 +15,7 @@ class ContentListVC: UIViewController {
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    
     configureViewController()
     configureTableView()
     configureRefreshButtons()
@@ -37,7 +37,7 @@ class ContentListVC: UIViewController {
   @objc func sortButtonTapped() {
     ItemsManager.shared.sortBy()
     
-    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? ButtonImages.titleDescending : ButtonImages.titleAscending
+    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
@@ -56,27 +56,27 @@ class ContentListVC: UIViewController {
   }
   
   private func configureRefreshButtons() {
-  
-    let refreshImage  = UIImage(systemName: ButtonImages.refreshItems)
+    
+    let refreshImage  = UIImage(systemName: SFImages.refreshItems)
     
     let refreshButton = UIBarButtonItem(image: refreshImage,
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(refreshButtonTapped))
-
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(refreshButtonTapped))
+    
     navigationItem.leftBarButtonItem = refreshButton
   }
   
   func configureSearchController() {
-      let searchController                                    = UISearchController()
-      searchController.searchResultsUpdater                   = self
-      searchController.searchBar.placeholder                  = "Filter articles by"
-      searchController.obscuresBackgroundDuringPresentation   = false
-      navigationItem.searchController                         = searchController
+    let searchController                                    = UISearchController()
+    searchController.searchResultsUpdater                   = self
+    searchController.searchBar.placeholder                  = PlaceHolders.filterArticlesBy
+    searchController.obscuresBackgroundDuringPresentation   = false
+    navigationItem.searchController                         = searchController
   }
   
   private func configureSortButtons() {
-    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? ButtonImages.titleAscending : ButtonImages.titleDescending
+    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? SFImages.titleAscending : SFImages.titleDescending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
@@ -84,7 +84,7 @@ class ContentListVC: UIViewController {
                                      style: .plain,
                                      target: self,
                                      action: #selector(sortButtonTapped))
-
+    
     navigationItem.rightBarButtonItem = sortButton
   }
   
