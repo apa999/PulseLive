@@ -9,8 +9,8 @@ import UIKit
 
 class ContentAsListVC: UIViewController {
   
-  let tableView = UITableView()
-  let nc        = NotificationCenter.default
+  let tableView  = UITableView()
+  let nc         = NotificationCenter.default
   
   //MARK: - Lifecycle
   override func viewDidLoad() {
@@ -19,6 +19,7 @@ class ContentAsListVC: UIViewController {
     configureViewController()
     configureTableView()
     configureRefreshButtons()
+    configureSearchController()
     configureSortButtons()
     addObservers()
     askForContents()
@@ -64,6 +65,14 @@ class ContentAsListVC: UIViewController {
                                      action: #selector(refreshButtonTapped))
 
     navigationItem.leftBarButtonItem = refreshButton
+  }
+  
+  func configureSearchController() {
+      let searchController                                    = UISearchController()
+      searchController.searchResultsUpdater                   = self
+      searchController.searchBar.placeholder                  = "Filter articles by"
+      searchController.obscuresBackgroundDuringPresentation   = false
+      navigationItem.searchController                         = searchController
   }
   
   private func configureSortButtons() {
@@ -122,5 +131,20 @@ extension ContentAsListVC: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     guard editingStyle == .delete else { return }
+  }
+}
+
+//MARK: - Search extension
+extension ContentAsListVC: UISearchResultsUpdating {
+  
+  func updateSearchResults(for searchController: UISearchController) {
+    guard let filter = searchController.searchBar.text, !filter.isEmpty else {
+      ItemsManager.shared.clearFilter()
+      tableView.reloadData()
+      return
+    }
+    
+    ItemsManager.shared.filterBy(filter.lowercased())
+    tableView.reloadData()
   }
 }

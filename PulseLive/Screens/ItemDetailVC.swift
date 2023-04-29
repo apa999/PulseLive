@@ -106,7 +106,7 @@ class ItemDetailVC: UIViewController {
       bodyLabel.heightAnchor.constraint(equalToConstant: 80),
       
       dateLabel.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor,
-                                     constant: vPadding),
+                                     constant: vPadding * 3),
       dateLabel.heightAnchor.constraint(equalToConstant: 20),
       
       idLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor,
@@ -119,8 +119,8 @@ class ItemDetailVC: UIViewController {
     titleLabel.text     = item.title
     subtitleLabel.text  = item.subtitle
     bodyLabel.text      = item.body
-    dateLabel.text      = item.date
-    idLabel.text = "\(item.id)"
+    dateLabel.text      = "Date - \(item.date)"
+    idLabel.text        = "Reference - \(item.id)"
   }
   
 }

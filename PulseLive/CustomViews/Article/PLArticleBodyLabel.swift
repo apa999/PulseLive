@@ -17,14 +17,15 @@ class PLArticleBodyLabel: UILabel {
     fatalError("init(coder:) has not been implemented")
   }
   
-  convenience init(textAlignment: NSTextAlignment) {
+  convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat = 18) {
     self.init(frame: .zero)
     self.textAlignment = textAlignment
+    self.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
   }
   
   private func configure() {
-    textColor                           = .secondaryLabel
-    font                                = UIFont.preferredFont(forTextStyle: .body)
+    backgroundColor                     = .systemBackground
+    textColor                           = .label
     adjustsFontForContentSizeCategory   = true
     adjustsFontSizeToFitWidth           = true
     minimumScaleFactor                  = 0.75

@@ -13,23 +13,38 @@ class ItemsManager {
   let decoder       = JSONDecoder()
   var content       = Content(items: [])
   var items         = [Item]()
+  var savedItems    = [Item]()
   var detailedItems = [Item]()
+  var isFiltered    = false
   let nc            = NotificationCenter.default
   
   enum SortedBy {
     case titleAscending, titleDescending
   }
   
-  var sortedBy = SortedBy.titleDescending
+  var sortedBy = SortedBy.titleAscending
   
   private init() {}
   
+  //MARK: - Public functions
+  func clearFilter() {
+    isFiltered = false
+    items      = savedItems
+  }
+  
+  func filterBy(_ filter: String) {
+    isFiltered  = true
+    savedItems  = items
+    items       = items.filter { $0.title.lowercased().contains(filter.lowercased()) }
+  }
+ 
   func getContents() {
     Task {
       do {
         let contents = try await NetworkManager.shared.getContents()
-        items = contents.items
-        sortBy()
+        items        = contents.items
+        savedItems   = items
+        sortBy(toggle: false)
   
         DispatchQueue.main.async { [weak self] in
           guard let self else {return}
@@ -45,8 +60,9 @@ class ItemsManager {
   func getItems() throws {
     Task {
       do {
-        content = try await NetworkManager.shared.getContents()
-        items   = content.items
+        content    = try await NetworkManager.shared.getContents()
+        items      = content.items
+        savedItems = items
       } catch {
         throw PLError.noArticlesFound
       }
@@ -67,8 +83,11 @@ class ItemsManager {
     }
   }
   
-  func sortBy() {
-    sortedBy = sortedBy == .titleAscending ? .titleDescending : .titleAscending
+  func sortBy(toggle: Bool = true) {
+    
+    if toggle {
+      sortedBy = sortedBy == .titleAscending ? .titleDescending : .titleAscending
+    }
     
     switch sortedBy {
       case .titleAscending:  items = items.sorted{ $0.title < $1.title}
