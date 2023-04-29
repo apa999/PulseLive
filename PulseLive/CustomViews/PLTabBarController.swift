@@ -19,8 +19,9 @@ class PLTabBarController: UITabBarController {
   func createListNC() -> UINavigationController {
     let contentAsListVC        = ContentAsListVC()
     let image                  = UIImage(systemName: "list.star")
-    contentAsListVC.title      = "Content's List"
-    contentAsListVC.tabBarItem = UITabBarItem(title: "List", image: image, tag: 0)
+    contentAsListVC.title      = TitlesAndLabels.contentAsListVCTitle
+    contentAsListVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsListVCTitle,
+                                              image: image, tag: 0)
     
     return UINavigationController(rootViewController: contentAsListVC)
   }
@@ -28,9 +29,10 @@ class PLTabBarController: UITabBarController {
   
   func createGridNC() -> UINavigationController {
     let contentAsGridVC        = ContentAsGridVC()
-    let image                  = UIImage(systemName: "rectangle.grid.3x2")
-    contentAsGridVC.title      = "Content's Grid"
-    contentAsGridVC.tabBarItem = UITabBarItem(title: "Grid", image: image, tag: 1)
+    let image                  = UIImage(systemName: "heart")
+    contentAsGridVC.title      = TitlesAndLabels.contentAsGridVCTitle
+    contentAsGridVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsGridVCTitle,
+                                              image: image, tag: 1)
     
     return UINavigationController(rootViewController: contentAsGridVC)
   }

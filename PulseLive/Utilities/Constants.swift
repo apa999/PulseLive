@@ -17,6 +17,6 @@ enum DataSourceLinks {
 }
 
 enum TitlesAndLabels {
-  static let contentAsListVCTitle = "List of Articles"
-  static let contentAsGridVCTitle = "Grid of Articles"
+  static let contentAsListVCTitle = "Articles"
+  static let contentAsGridVCTitle = "Favourites"
 }
