@@ -41,6 +41,6 @@ The data is retrieved by the network manager, using asynchronous commands. The n
 
 Some automated testing has been but most testing has been manual.
 
-There is some duplication of code between the ItemsManager and Favourites manager which I would have refactored, given a little more time.
+There is some duplication of code between the ItemsManager and FavouritesManager which I would have refactored, given a little more time.
 
 Approximate build time: 16 hours.
