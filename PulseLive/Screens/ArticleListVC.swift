@@ -76,7 +76,7 @@ class ArticleListVC: UIViewController {
   }
   
   private func configureSortButtons() {
-    let sortButtonImageName = ArticleManager.shared.sortedBy == .titleAscending ? SFImages.titleAscending : SFImages.titleDescending
+    let sortButtonImageName = ArticleManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     

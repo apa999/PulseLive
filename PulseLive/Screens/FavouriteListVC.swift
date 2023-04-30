@@ -63,7 +63,7 @@ class FavouriteListVC: UIViewController {
   @objc func sortButtonTapped() {
     FavouritesManager.shared.sortBy()
     
-    let sortButtonImageName = ArticleManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
+    let sortButtonImageName = FavouritesManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
@@ -103,7 +103,7 @@ class FavouriteListVC: UIViewController {
   }
   
   private func configureSortButtons() {
-    let sortButtonImageName = ArticleManager.shared.sortedBy == .titleAscending ? SFImages.titleAscending : SFImages.titleDescending
+    let sortButtonImageName = ArticleManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
