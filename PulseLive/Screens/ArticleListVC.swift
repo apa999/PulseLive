@@ -1,5 +1,5 @@
 //
-//  ContentAsListVC.swift
+//  ArticleListVC.swift
 //  PulseLive
 //
 //  Created by Anthony Abbott on 28/04/2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ContentListVC: UIViewController {
+class ArticleListVC: UIViewController {
   
   let tableView  = UITableView()
   let nc         = NotificationCenter.default
@@ -31,13 +31,13 @@ class ContentListVC: UIViewController {
   }
   
   @objc func refreshButtonTapped() {
-    ItemsManager.shared.getContents()
+    ArticleManager.shared.getContents()
   }
   
   @objc func sortButtonTapped() {
-    ItemsManager.shared.sortBy()
+    ArticleManager.shared.sortBy()
     
-    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
+    let sortButtonImageName = ArticleManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
@@ -52,7 +52,7 @@ class ContentListVC: UIViewController {
   }
   
   private func askForContents() {
-    ItemsManager.shared.getContents()
+    ArticleManager.shared.getContents()
   }
   
   private func configureRefreshButtons() {
@@ -76,7 +76,7 @@ class ContentListVC: UIViewController {
   }
   
   private func configureSortButtons() {
-    let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? SFImages.titleAscending : SFImages.titleDescending
+    let sortButtonImageName = ArticleManager.shared.sortedBy == .titleAscending ? SFImages.titleAscending : SFImages.titleDescending
     
     let sortImage  = UIImage(systemName: sortButtonImageName)
     
@@ -108,23 +108,23 @@ class ContentListVC: UIViewController {
 }
 
 //MARK: - Extensions
-extension ContentListVC: UITableViewDataSource, UITableViewDelegate {
+extension ArticleListVC: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return ItemsManager.shared.items.count
+    return ArticleManager.shared.items.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifiers.plItemListCell) as! PLItemListCell
     
-    let item = ItemsManager.shared.items[indexPath.row]
+    let item = ArticleManager.shared.items[indexPath.row]
     cell.set(item: item)
     return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let itemDetailVC  = ItemDetailVC()
-    itemDetailVC.item = ItemsManager.shared.items[indexPath.row]
+    itemDetailVC.item = ArticleManager.shared.items[indexPath.row]
     
     navigationController?.pushViewController(itemDetailVC, animated: true)
   }
@@ -132,23 +132,23 @@ extension ContentListVC: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     guard editingStyle == .delete else { return }
     
-    let itemToDelete = ItemsManager.shared.items[indexPath.row]
-    ItemsManager.shared.delete(item: itemToDelete)
+    let itemToDelete = ArticleManager.shared.items[indexPath.row]
+    ArticleManager.shared.delete(item: itemToDelete)
     tableView.deleteRows(at: [indexPath], with: .left)
   }
 }
 
 //MARK: - Search extension
-extension ContentListVC: UISearchResultsUpdating {
+extension ArticleListVC: UISearchResultsUpdating {
   
   func updateSearchResults(for searchController: UISearchController) {
     guard let filter = searchController.searchBar.text, !filter.isEmpty else {
-      ItemsManager.shared.clearFilter()
+      ArticleManager.shared.clearFilter()
       tableView.reloadData()
       return
     }
     
-    ItemsManager.shared.filterBy(filter.lowercased())
+    ArticleManager.shared.filterBy(filter.lowercased())
     tableView.reloadData()
   }
 }

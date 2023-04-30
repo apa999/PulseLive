@@ -1,5 +1,5 @@
 //
-//  ItemsManager.swift
+//  ArticleManager.swift
 //  PulseLive
 //
 //  Created by Anthony Abbott on 28/04/2023.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-class ItemsManager {
+class ArticleManager {
   
-  static let shared = ItemsManager()
+  static let shared = ArticleManager()
   let decoder       = JSONDecoder()
   var content       = Content(items: [])
   var items         = [Item]()
@@ -71,7 +71,7 @@ class ItemsManager {
     Task{
       do {
         let itemWithBody = try await NetworkManager.shared.getItemDetail(for: item.id)
-        ItemsManager.shared.addItemDetail(itemWithBody)
+        ArticleManager.shared.addItemDetail(itemWithBody)
         notify(notificationName: NotificationNames.haveGotBody)
       } catch {
         notify(notificationName: NotificationNames.failedToFindBody)

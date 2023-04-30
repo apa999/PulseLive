@@ -68,7 +68,7 @@ class ItemDetailVC: UIViewController {
   }
   
   @objc func haveGotBody() {
-    if let itemWithBody = ItemsManager.shared.getItemDetail(for: item.id) {
+    if let itemWithBody = ArticleManager.shared.getItemDetail(for: item.id) {
       self.itemWithBody = itemWithBody
       loadFields(item: itemWithBody)
     }
@@ -142,11 +142,11 @@ class ItemDetailVC: UIViewController {
   }
 
   private func getItemDetail() {
-    if let itemWithBody = ItemsManager.shared.getItemDetail(for: item.id) {
+    if let itemWithBody = ArticleManager.shared.getItemDetail(for: item.id) {
       self.itemWithBody = itemWithBody
       loadFields(item: itemWithBody)
     } else {
-      ItemsManager.shared.getItemBody(for: item)
+      ArticleManager.shared.getItemBody(for: item)
     }
   }
   

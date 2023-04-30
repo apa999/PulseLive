@@ -16,7 +16,7 @@ class PLTabBarController: UITabBarController {
   }
   
   func createListNC() -> UINavigationController {
-    let contentAsListVC        = ContentListVC()
+    let contentAsListVC        = ArticleListVC()
     let image                  = UIImage(systemName: SFImages.listStar)
     contentAsListVC.title      = TitlesAndLabels.contentAsListVCTitle
     contentAsListVC.tabBarItem = UITabBarItem(title: TitlesAndLabels.contentAsListVCTitle,
