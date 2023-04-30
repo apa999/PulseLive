@@ -40,3 +40,7 @@ The app uses the standard MVC architecture; it consists of a model (for articles
 The data is retrieved by the network manager, using asynchronous commands. The network manager broadcasts notifications when data is available, and the controllers observe the notifications and respond accordingly.
 
 Some automated testing has been but most testing has been manual.
+
+There is some duplication of code between the ItemsManager and Favourites manager which I would have refactored, given a little more time.
+
+Approximate build time: 16 hours.
