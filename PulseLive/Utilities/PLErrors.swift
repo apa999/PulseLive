@@ -16,4 +16,5 @@ enum PLError: String, Error {
   case noDetailsFound          = "Could not find details for this article"
   case unableToSaveAsFavourite = "Could not save the article to favourites"
   case unableToLoadFavourites  = "Could not retrieve favourites"
+  case alreadyAFavourite       = "This article is already a favourite"
 }

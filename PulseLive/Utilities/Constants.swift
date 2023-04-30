@@ -8,6 +8,8 @@
 import Foundation
 
 enum AlertMessages {
+  static let alreadyAFavourite              = "Article already a favourite"
+  static let alreadyAFavouriteMessage       = "This article has already been saved as a favourite"
   static let addedFavourites                = "Article saved"
   static let addedFavouritesMessage         = "has been saved to favourites."
   static let noFavourites                   = "No favourite articles"

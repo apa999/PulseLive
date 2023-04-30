@@ -51,9 +51,8 @@ class ItemDetailVC: UIViewController {
                               message: message)
           }
         } else {
-          DispatchQueue.main.async {
-            self.presentAlert(title: AlertMessages.failedToSaveFavourite,
-                              message: AlertMessages.failedToSaveFavouriteMessage)
+          if let error {
+            showUser(error: error)
           }
         }
         return
@@ -157,5 +156,25 @@ class ItemDetailVC: UIViewController {
     bodyLabel.text      = item.body
     dateLabel.text      = "Date - \(item.date)"
     idLabel.text        = "Reference - \(item.id)"
+  }
+  
+  private func showUser(error: PLError) {
+    func presentError(title: String, message: String) {
+      DispatchQueue.main.async {
+        self.presentAlert(title:title, message: message)
+      }
+    }
+    
+    switch error {
+      case .alreadyAFavourite:
+        presentError(title: AlertMessages.alreadyAFavourite,
+                     message: AlertMessages.alreadyAFavouriteMessage)
+        
+      default:
+        DispatchQueue.main.async {
+          self.presentAlert(title: AlertMessages.failedToSaveFavourite,
+                            message: AlertMessages.failedToSaveFavouriteMessage)
+        }
+    }
   }
 }

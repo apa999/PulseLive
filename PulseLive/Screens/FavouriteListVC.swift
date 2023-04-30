@@ -61,7 +61,7 @@ class FavouriteListVC: UIViewController {
   }
   
   @objc func sortButtonTapped() {
-    ItemsManager.shared.sortBy()
+    FavouritesManager.shared.sortBy()
     
     let sortButtonImageName = ItemsManager.shared.sortedBy == .titleAscending ? SFImages.titleDescending : SFImages.titleAscending
     
