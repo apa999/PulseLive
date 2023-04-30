@@ -8,9 +8,11 @@ On launch the app will automatically download a list of documents from the serve
 
 The article list can be sorted alphabetically, ascending, or descending, by tapping the “sort” (triangle) icon in the top right of the screen. Articles will be sorted by their title. 
 
-Although the initial retrieval of documents is automatic, the user can repeat the download whenever required by pressing the “refresh” (circular arrow) icon in the top left of the screen.
+Although the initial retrieval of documents is automatic, the user can repeat the download whenever required by pressing the “refresh” (circular arrow) icon in the top left of the screen. (This functionality can be demonstrated by deleting a record, and then reloading the articles, as described below.)
 
 The user can filter the articles in the list by typing a filter string in the “Filter by” box immediately below the “Articles” title. The filter can be removed by tapping the “Cancel” button, or by clearing the filter box. 
+
+The user can delete articles from the list by swiping left on the article row. The user could then reload all the articles using the "refresh" button. 
 
 Document detail
 
@@ -41,6 +43,6 @@ The data is retrieved by the network manager, using asynchronous commands. The n
 
 Some automated testing has been but most testing has been manual.
 
-There is some duplication of code between the ItemsManager and FavouritesManager which I would have refactored, given a little more time.
+There is some duplication of code between the ArtilcesManager and FavouritesManager which I would have refactored, given a little more time.
 
 Approximate build time: 16 hours.
