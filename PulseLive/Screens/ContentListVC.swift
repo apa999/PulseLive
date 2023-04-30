@@ -131,6 +131,10 @@ extension ContentListVC: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     guard editingStyle == .delete else { return }
+    
+    let itemToDelete = ItemsManager.shared.items[indexPath.row]
+    ItemsManager.shared.delete(item: itemToDelete)
+    tableView.deleteRows(at: [indexPath], with: .left)
   }
 }
 

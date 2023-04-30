@@ -38,6 +38,11 @@ class ItemsManager {
     items      = savedItems
   }
   
+  func delete(item: Item) {
+    items.removeAll(where: {$0 == item })
+    savedItems.removeAll(where: {$0 == item })
+  }
+  
   func filterBy(_ filter: String) {
     isFiltered  = true
     savedItems  = items
